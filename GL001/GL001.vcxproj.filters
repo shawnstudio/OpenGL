@@ -21,6 +21,9 @@
     <ClCompile Include="GeometryRender.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="tessellatedtri.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeometryRender.h">

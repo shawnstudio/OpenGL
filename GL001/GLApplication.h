@@ -27,6 +27,7 @@ public:
 
 	virtual void startup(int x,int y,int w,int h,const char* title) {
 		glfwInit();
+		glfwSetErrorCallback(&GLApplication::glfwErrorcallback);
 		window =glfwCreateWindow(w, h, title, nullptr, nullptr);
 		if (window == nullptr)
 		{
@@ -69,6 +70,8 @@ public:
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();
+
+			processError();
 			auto sleeptime = nexttime - std::clock();
 			Sleep(sleeptime < 0 ? 0 : sleeptime);
 		}
@@ -142,7 +145,43 @@ protected:
 
 	}
 
+	const char* getGLErrorInfo(int errorId)
+	{
+		switch (errorId)
+		{
+		case GL_INVALID_ENUM:
+			return ("GL Invalid Enum\n");
+		case GL_INVALID_VALUE:
+			return ("GL Invalid Value\n");
+		case GL_INVALID_OPERATION:
+			return ("GL Invalid Operation\n");
+		case GL_OUT_OF_MEMORY:
+			return ("GL Out Of Memory\n");
+			//case GL_INVALID_FRAMEBUFFER_OPERATION:
+			//	return ("GL Invalid FrameBuffer Operation\n");
+		case  GL_STACK_OVERFLOW:
+			return ("GL Stack Overflow\n");
+		case GL_STACK_UNDERFLOW:
+			return ("GL Stack Underflow\n");
+			//case GL_TABLE_TOO_LARGE:
+			//	return ("GL Table Too Large\n");
+		};
+
+		return "GL Undefined Error";
+	}
+
+	void processError() {
+		for (GLenum err; (err = glGetError()) != GL_NO_ERROR;)
+		{
+			cout << "gl error id=" << err << "message:" << getGLErrorInfo(err) << endl;
+		}
+	}
+
 private:
+
+	static void glfwErrorcallback(int error, const char* description) {
+		cout << "glfw Error:" << error << "\nmessage:" << description << endl;
+	}
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	{
 		// make sure the viewport matches the new window dimensions; note that width and 

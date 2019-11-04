@@ -1,5 +1,4 @@
 #include"GeometryRender.h"
-
 int main(int argc, char** argv) {
 
 	GeometryRender app;
