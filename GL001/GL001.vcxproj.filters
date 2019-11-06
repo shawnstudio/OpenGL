@@ -32,5 +32,8 @@
     <ClInclude Include="GLApplication.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\vmath.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

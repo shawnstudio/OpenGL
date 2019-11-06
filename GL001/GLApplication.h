@@ -49,6 +49,13 @@ public:
 		printf("OpenGL实现厂商的名字：%s\n", name);
 		printf("渲染器标识符：%s\n", biaoshifu);
 		printf("OpenGL实现的版本号：%s\n", OpenGLVersion);
+
+		int exNum = 0;
+		glGetIntegerv(GL_NUM_EXTENSIONS, &exNum);
+		for (int i = 0; i < exNum; i++) {
+			auto n = glGetStringi(GL_EXTENSIONS, i);
+			cout << "supported extension " << n << endl;
+		}
 	}
 
 	virtual void run() {

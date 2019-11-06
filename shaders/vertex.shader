@@ -11,7 +11,8 @@ void main(void){
 	vec4(0.25,-0.25,0.5,1.0),
 	vec4(-0.25,-0.25,0.5,1.0),
 	vec4(0.25,0.25,0.5,1.0));
-	gl_Position = vertexs[gl_VertexID] + offset;
+	//gl_Position = vertexs[gl_VertexID] + offset;
 	//gl_Position = vec4(0.0, 0.0, 0.5, 1.0);
 	vs_out.color = color;
+	gl_Position = offset;
 }
