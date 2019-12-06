@@ -7,10 +7,13 @@
 #include <fstream>
 #include <string.h>
 #include <ctime>
-#include <Windows.h>
 #include <map>
 #include<vector>
+#include<sstream>
+#include "ShaderHelper.h"
 using namespace std;
+
+void _sleep(long ms);
 
 class GLApplication
 {
@@ -20,9 +23,10 @@ public:
 		clearG = clearR = clearB = 0;
 		clearA = 1;
 		fps = 60;
+		application = this;
 	}
 	~GLApplication() {
-
+		application = nullptr;
 	}
 
 	virtual void startup(int x,int y,int w,int h,const char* title) {
@@ -52,8 +56,13 @@ public:
 		int exNum = 0;
 		glGetIntegerv(GL_MAX_UNIFORM_BUFFER_BINDINGS, &exNum);
 		printf("Max_Uniform_buffer_Bindings %d\n", exNum);
+
 		glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &exNum);
 		printf("Max_Uniform_BlockSize %d\n", exNum);
+
+		glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &exNum);
+		printf("Max_Texture_Image_Units %d\n", exNum);
+
 		glGetIntegerv(GL_NUM_EXTENSIONS, &exNum);
 		for (int i = 0; i < exNum; i++) {
 			auto n = glGetStringi(GL_EXTENSIONS, i);
@@ -83,7 +92,7 @@ public:
 
 			processError();
 			auto sleeptime = nexttime - std::clock();
-			Sleep(sleeptime < 0 ? 0 : sleeptime);
+			_sleep(sleeptime < 0 ? 0 : sleeptime);
 		}
 	}
 
@@ -108,42 +117,37 @@ public:
 		this->fps = fps;
 	}
 
-	int LoadShader(const char* file, GLenum type) {
-		ifstream s;
-		s.open(file, ios::in);
-		if (!s.is_open())
-		{
-			cout << "open failed :" << file << endl;
-			return -1;
-		}
-		char buffer[2048];
-		s.getline(buffer, 2048, '\0');
-		s.close();
+	//int LoadShader(const char* file, GLenum type) {
+	//	ifstream s;
+	//	s.open(file, ios::in);
+	//	if (!s.is_open())
+	//	{
+	//		cout << "open failed :" << file << endl;
+	//		return -1;
+	//	}
 
-		int shader = glCreateShader(type);
-		int len = std::strlen(buffer);
-		const GLchar* const str = buffer;
-		glShaderSource(shader, 1, &str, &len);
-		glCompileShader(shader);
-		return shader;
-	}
+	//	stringstream sstream;
+	//	sstream << s.rdbuf();
+	//	s.close();
+
+	//	string sbuff;
+	//	sbuff = sstream.str();
+
+	//	int shader = glCreateShader(type);
+	//	const GLchar* const str = sbuff.c_str();
+	//	int len = strlen(str);
+	//	glShaderSource(shader, 1, &str, &len);
+	//	glCompileShader(shader);
+	//	return shader;
+	//}
 
 	int LoadProgram(map<GLenum,const char*> shaders) {
-		vector<int> ids;
+		vector<GLuint> ids;
 		for (const auto& s : shaders)
 		{
-			ids.push_back(LoadShader(s.second, s.first));
+			ids.push_back(CompileShaderFile(s.first, s.second));
 		}
-		int program = glCreateProgram();
-		for (const auto& s : ids) {
-			glAttachShader(program, s);
-		}
-		glLinkProgram(program);
-
-		for (const auto& s : ids) {
-			glDeleteShader(s);
-		}
-		return program;
+		return LinkShaderProgram(false, ids.size(), ids.data());
 	}
 
 protected:
@@ -187,8 +191,10 @@ protected:
 		}
 	}
 
-private:
+	virtual void onViewport(int width,int height){}
 
+private:
+	static GLApplication* application;
 	static void glfwErrorcallback(int error, const char* description) {
 		cout << "glfw Error:" << error << "\nmessage:" << description << endl;
 	}
@@ -197,5 +203,8 @@ private:
 		// make sure the viewport matches the new window dimensions; note that width and 
 		// height will be significantly larger than specified on retina displays.
 		glViewport(0, 0, width, height);
+		if (application != nullptr) {
+			application->onViewport(width,height);
+		}
 	}
 };

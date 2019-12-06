@@ -24,6 +24,12 @@
     <ClCompile Include="tessellatedtri.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ModelRender.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderHelper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeometryRender.h">
@@ -33,6 +39,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\vmath.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelRender.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderHelper.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

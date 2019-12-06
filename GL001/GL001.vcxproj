@@ -87,13 +87,13 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\stb;D:\OpenGL\includes;D:\OpenGL\glfw\include;D:\OpenGL\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\OpenSources\assimp\build\include;D:\OpenSources\assimp\include;D:\stb;D:\OpenGL\includes;D:\OpenGL\glfw\include;D:\OpenGL\glew-2.1.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>D:\OpenGL\glfw\build\src\Debug;D:\OpenGL\glew-2.1.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\OpenGL\glfw\build\src\Debug;D:\OpenGL\glew-2.1.0\lib\Release\x64;D:\OpenSources\assimp\build\code\Debug;D:\OpenGL\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;assimp-vc142-mtd.lib;IrrXMLd.lib;zlibstaticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -129,12 +129,16 @@
   <ItemGroup>
     <ClCompile Include="GeometryRender.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ModelRender.cpp" />
+    <ClCompile Include="ShaderHelper.cpp" />
     <ClCompile Include="tessellatedtri.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\vmath.h" />
     <ClInclude Include="GeometryRender.h" />
     <ClInclude Include="GLApplication.h" />
+    <ClInclude Include="ModelRender.h" />
+    <ClInclude Include="ShaderHelper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

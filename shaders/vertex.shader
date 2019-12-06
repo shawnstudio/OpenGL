@@ -1,6 +1,8 @@
 #version 450 core
 layout (location =0) in vec4 position;
 layout (location =1) in vec4 color;
+layout (location =2) in vec4 instance_offset;
+layout (location =3) in vec4 instance_color;
 
 struct vertex{
 	vec4 position;
@@ -25,8 +27,9 @@ out VS_OUT{
 } vs_out;
 
 void main(void){
-	gl_Position = mys.vertices[gl_VertexID].position;
-	//gl_Position = position;
+	//gl_Position = mys.vertices[gl_VertexID].position;
+	gl_Position = position + instance_offset;
+	//gl_Position.z -= gl_InstanceID;
 	gl_Position*= transform.modelscale;
 	
 	float rZ = transform.modelrote.z;
@@ -45,7 +48,10 @@ void main(void){
 	gl_Position = mRote * gl_Position;
 	gl_Position += transform.modelpos;
 	gl_Position = transform.viewmatrix * gl_Position;
-	vs_out.color = mys.vertices[gl_VertexID].color;
+	//vs_out.color = mys.vertices[gl_VertexID].color;
 	vs_out.position = gl_Position;
-	//vs_out.color = color;
+	//mys.counter+=1;
+	//memoryBarrier();
+	//atomicAdd(mys.counter,1);
+	vs_out.color = color;// * instance_color;
 }
