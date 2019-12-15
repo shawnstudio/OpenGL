@@ -85,7 +85,7 @@ public:
 			glClearColor(this->clearR, this->clearG, this->clearB, this->clearA);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			this->onRender(currtime / 1000.0f);
+			this->onRender(currtime / 1000.0f,delta);
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();
@@ -103,7 +103,7 @@ public:
 
 	}
 
-	virtual void onRender(double time) {
+	virtual void onRender(double time, double delta) {
 	}
 
 	void SetClearColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a) {

@@ -30,6 +30,9 @@
     <ClCompile Include="ShaderHelper.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="SpringMesh.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeometryRender.h">
@@ -45,6 +48,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ShaderHelper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicEngine.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

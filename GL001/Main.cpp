@@ -3,6 +3,11 @@
 #include <Windows.h>
 GLApplication* GLApplication::application = nullptr;
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+
+extern GLApplication* createSpring();
+
 void _sleep(long ms) {
 	if (ms <= 0)return;
 	Sleep(ms);
@@ -11,9 +16,10 @@ void _sleep(long ms) {
 
 int main(int argc, char** argv) {
 
-	ModelRender app;
-	app.startup(0, 0, 800, 600, "firstApp");
-	app.run();
-	app.shutdown();
+	GLApplication* app = createSpring();
+	app->startup(0, 0, 1200, 400, "firstApp");
+	app->run();
+	app->shutdown();
+	delete app;
 	return 0;
 }

@@ -1,7 +1,6 @@
 #pragma once
 #include "GLApplication.h"
 #include "../vmath.h"
-#define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
 
@@ -57,45 +56,47 @@ public:
 		//由一个Buffer提供数据
 		glNamedBufferStorage(buffer[0], 1024, nullptr, GL_MAP_WRITE_BIT | GL_DYNAMIC_STORAGE_BIT);
 		glNamedBufferStorage(buffer[1], 1024, nullptr, GL_MAP_WRITE_BIT | GL_DYNAMIC_STORAGE_BIT);
-		//glVertexArrayVertexBuffer(vao, 0, buffer[0], 0, sizeof(vmath::vec4)*2);
-		//glVertexArrayAttribFormat(vao, 0, 4, GL_FLOAT, GL_FALSE, 0);
-		//glVertexArrayAttribFormat(vao, 1, 4, GL_FLOAT, GL_FALSE, sizeof(vmath::vec4));
+		glVertexArrayVertexBuffer(vao, 0, buffer[0], 0, sizeof(vmath::vec4)*2);
+		glVertexArrayAttribFormat(vao, 0, 4, GL_FLOAT, GL_FALSE, 0);
+		glVertexArrayAttribFormat(vao, 1, 4, GL_FLOAT, GL_FALSE, sizeof(vmath::vec4));
 
-		//glVertexArrayAttribBinding(vao, 0, 0);
-		//glVertexArrayAttribBinding(vao, 1, 0);
 
-		//glEnableVertexArrayAttrib(vao, 0);
-		//glEnableVertexArrayAttrib(vao, 1);
+		glVertexArrayAttribBinding(vao, 0, 0);
+		glVertexArrayAttribBinding(vao, 1, 0);
+
+		glEnableVertexArrayAttrib(vao, 0);
+		glEnableVertexArrayAttrib(vao, 1);
 
 		//不使用VAO
 		//glBindBufferBase(GL_ARRAY_BUFFER, 0, buffer[0]);
-		glBindVertexBuffer(0, buffer[0], 0, sizeof(vmath::vec4) * 2);
-		glBindVertexBuffer(1, buffer[1], 0, sizeof(vmath::vec4) * 2);
+		//glBindVertexBuffer(0, buffer[0], 0, sizeof(vmath::vec4) * 2);
+		//glBindVertexBuffer(1, buffer[1], 0, sizeof(vmath::vec4) * 2);
 
-		glVertexAttribFormat(0, 4, GL_FLOAT, false, 0);
-		glVertexAttribFormat(1, 4, GL_FLOAT, false, sizeof(vmath::vec4));
-		glVertexAttribFormat(2, 4, GL_FLOAT, false, 0);
-		glVertexAttribFormat(3, 4, GL_FLOAT, false, sizeof(vmath::vec4));
+		//glVertexAttribFormat(0, 4, GL_FLOAT, false, 0);
+		//glVertexAttribFormat(1, 4, GL_FLOAT, false, sizeof(vmath::vec4));
+		//glVertexAttribFormat(2, 4, GL_FLOAT, false, 0);
+		//glVertexAttribFormat(3, 4, GL_FLOAT, false, sizeof(vmath::vec4));
 
 		//glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
 		//glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(vmath::vec4) * 2, (void*)0);
 		//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vmath::vec4) * 2, (void*)sizeof(vmath::vec4));
 
-		glVertexAttribBinding(0, 0);
-		glVertexAttribBinding(1, 0);
-		glVertexAttribBinding(2, 1);
-		glVertexAttribBinding(3, 1);
+		//glVertexAttribBinding(0, 0);
+		//glVertexAttribBinding(1, 0);
+		//glVertexAttribBinding(2, 1);
+		//glVertexAttribBinding(3, 1);
 
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(1);
-		glEnableVertexAttribArray(2);
-		glEnableVertexAttribArray(3);
+		//glEnableVertexAttribArray(0);
+		//glEnableVertexAttribArray(1);
+		//glEnableVertexAttribArray(2);
+		//glEnableVertexAttribArray(3);
 
 
 		//
 		glCreateBuffers(1, &indicesbuffer);
 		glNamedBufferStorage(indicesbuffer, 1024, nullptr, GL_MAP_WRITE_BIT | GL_MAP_READ_BIT | GL_DYNAMIC_STORAGE_BIT);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesbuffer);
+		//glVertexArrayElementBuffer(vao, indicesbuffer);
 
 		//Uniform Block
 		glCreateBuffers(1, &unibuffer);
@@ -108,6 +109,7 @@ public:
 		glCreateBuffers(1, &storageBuffer);
 		glNamedBufferStorage(storageBuffer, 1024, nullptr, GL_MAP_WRITE_BIT | GL_MAP_READ_BIT | GL_DYNAMIC_STORAGE_BIT);
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, storageBuffer);
+
 
 		//Texture
 		const int textureW = 256;
@@ -155,7 +157,7 @@ public:
 		glDeleteVertexArrays(1, &vao);
 	}
 
-	void onRender(double time) override {
+	void onRender(double time, double delta) override {
 		//glClearColor(std::sin(time) * 0.5f + 0.5f, std::cos(time) * 0.5f + 0.5f, 0.5, 1);
 		//glClearColor(0, 0, 0, 1);
 		//glClear(GL_COLOR_BUFFER_BIT);
@@ -248,11 +250,11 @@ public:
 		auto pMatix = vmath::perspective(60, 1, 0.1, 1000);
 
 		char* pcbuf = (char*)glMapNamedBuffer(buffer[0], GL_WRITE_ONLY);
-		//memcpy(pcbuf, fourFace, sizeof(fourFace));
-		GenTriangle(pcbuf, fourFace, 0, 1, 2);
-		GenTriangle(pcbuf, fourFace, 3, 2, 0);
-		GenTriangle(pcbuf, fourFace, 0, 1, 3);
-		GenTriangle(pcbuf, fourFace, 3, 1, 2);
+		memcpy(pcbuf, fourFace, sizeof(fourFace));
+		//GenTriangle(pcbuf, fourFace, 0, 1, 2);
+		//GenTriangle(pcbuf, fourFace, 3, 2, 0);
+		//GenTriangle(pcbuf, fourFace, 0, 1, 3);
+		//GenTriangle(pcbuf, fourFace, 3, 1, 2);
 		glUnmapNamedBuffer(buffer[0]);
 		GLushort ids[] = {0,1,2, 0,2,3, 0,1,3, 3,1,2};
 		glNamedBufferSubData(indicesbuffer, 0, sizeof(ids), ids);
@@ -312,7 +314,8 @@ public:
 		int num = sizeof(ids) / sizeof(ids[0]);
 		//glDrawElements(GL_TRIANGLES, num, GL_UNSIGNED_SHORT, 0);
 		//glVertexAttribDivisor()
-		glDrawElementsInstancedBaseInstance(GL_TRIANGLES, num, GL_UNSIGNED_SHORT, 0, 3,0);
+		//glDrawElementsInstancedBaseInstance(GL_TRIANGLES, num, GL_UNSIGNED_SHORT, 0, 3,0);
+		glDrawElements(GL_TRIANGLES, num, GL_UNSIGNED_SHORT, 0);
 		//glDrawArraysInstancedBaseInstance(GL_TRIANGLES, 0, num, 3, 0);
 	}
 

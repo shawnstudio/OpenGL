@@ -131,12 +131,15 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModelRender.cpp" />
     <ClCompile Include="ShaderHelper.cpp" />
+    <ClCompile Include="SpringMesh.cpp" />
     <ClCompile Include="tessellatedtri.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\vmath.h" />
     <ClInclude Include="GeometryRender.h" />
     <ClInclude Include="GLApplication.h" />
+    <ClInclude Include="GraphicEngine.h" />
+    <ClInclude Include="Helper.h" />
     <ClInclude Include="ModelRender.h" />
     <ClInclude Include="ShaderHelper.h" />
   </ItemGroup>

@@ -122,7 +122,7 @@ public:
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     }
 
-    void onRender(double currentTime) override
+    void onRender(double currentTime,double delta) override
     {
         static const GLfloat green[] = { 0.0f, 0.25f, 0.0f, 1.0f };
         glClearBufferfv(GL_COLOR, 0, green);
