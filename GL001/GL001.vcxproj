@@ -133,6 +133,7 @@
     <ClCompile Include="ShaderHelper.cpp" />
     <ClCompile Include="SpringMesh.cpp" />
     <ClCompile Include="tessellatedtri.cpp" />
+    <ClCompile Include="TessellationRender.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\vmath.h" />

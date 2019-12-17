@@ -28,7 +28,7 @@ out VS_OUT{
 
 void main(void){
 	//gl_Position = mys.vertices[gl_VertexID].position;
-	gl_Position = position + instance_offset;
+	gl_Position = position;// + instance_offset;
 	//gl_Position.z -= gl_InstanceID;
 	gl_Position*= transform.modelscale;
 	

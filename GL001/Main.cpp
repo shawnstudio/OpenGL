@@ -7,6 +7,7 @@ GLApplication* GLApplication::application = nullptr;
 #include <stb_image.h>
 
 extern GLApplication* createSpring();
+extern GLApplication* createTessllaton();
 
 void _sleep(long ms) {
 	if (ms <= 0)return;
@@ -16,7 +17,7 @@ void _sleep(long ms) {
 
 int main(int argc, char** argv) {
 
-	GLApplication* app = createSpring();
+	GLApplication* app = createTessllaton();
 	app->startup(0, 0, 1200, 400, "firstApp");
 	app->run();
 	app->shutdown();

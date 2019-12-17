@@ -33,6 +33,9 @@
     <ClCompile Include="SpringMesh.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="TessellationRender.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeometryRender.h">
