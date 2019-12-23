@@ -10,7 +10,7 @@ protected:
 public:
 	virtual void startup(int x, int y, int w, int h, const char* title) override {
 		GLApplication::startup(x, y, w, h, title);
-		metrial = Material::Create("D:/OpenGL/materials/tessellation/");
+		metrial = Material::Create("D:/OpenGL/materials/tessellation_bezier/");
 		mainCamera.fovy = 45;
 		mainCamera.nearplan = 0.01;
 		mainCamera.farplan = 1000;
@@ -26,17 +26,20 @@ public:
 	virtual void onRender(double time, double delta) override {
 		static float yRote = 0;
 		metrial->Use();
-		mainCamera.LookAt(vec3(0), vec3(20, yRote, 0), 5);
+		mainCamera.LookAt(vec3(0), vec3(20, yRote+=0.01, 0), 3);
 		mat4 mvp = mainCamera.vp();
 		glUniformMatrix4fv(0, 1, GL_FALSE, mvp);
 
 		vec4 quad[]{
-			vec4(-1,0,-1,1),vec4(1,0,-1,1),vec4(2,0,1,1),vec4(0,0,1,1),vec4(-1,0,1,1),vec4(-1,0,-1,1)
+			vec4(-1,1,-1,1),	vec4(-0.5,-1,-1,1),	vec4(0,0,-1,1),		vec4(0.5,2,-1,1),
+			vec4(-1,0,-0.5,1),	vec4(-0.5,0,-0.5,1),vec4(0,0,-0.5,1),	vec4(0.5,0,-0.5,1),
+			vec4(-1,0,0,1),		vec4(-0.5,0,0,1),	vec4(0,0,0,1),		vec4(0.5,0,0,1),
+			vec4(-1,0,0.5,1),	vec4(-0.5,1,0.5,1),	vec4(0,-1,0.5,1),	vec4(0.5,0,0.5,1),
 		};
-		glPatchParameteri(GL_PATCH_VERTICES, 4);
+		glPatchParameteri(GL_PATCH_VERTICES, 16);
 		glNamedBufferSubData(vbo, 0, sizeof(quad), quad);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glDrawArrays(GL_PATCHES, 0,4);
+		glDrawArrays(GL_PATCHES, 0,16);
 		//glDrawArrays(GL_TRIANGLES, 0,3);
 		//glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
